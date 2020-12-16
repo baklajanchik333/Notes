@@ -1,5 +1,6 @@
 package com.example.notes.Activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -54,31 +55,31 @@ public class CreateNote extends AppCompatActivity {
             Toast.makeText(this, R.string.noEmptyTitleNote, Toast.LENGTH_SHORT).show();
         } else if (note.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, R.string.noEmptyNote, Toast.LENGTH_SHORT).show();
-        } else {
-            final Note note1 = new Note();
-            note1.setTitle(noteTitle.getText().toString().trim());
-            note1.setSubtitle(noteSubtitle.getText().toString().trim());
-            note1.setNoteText(note.getText().toString().trim());
-            note1.setDateTime(dateTime.getText().toString().trim());
+        }
 
-            @SuppressLint("StaticFieldLeak")
-            class SaveNoteTask extends AsyncTask<Void, Void, Void> {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    NotesDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note1);
-                    return null;
-                }
+        final Note note1 = new Note();
+        note1.setTitle(noteTitle.getText().toString().trim());
+        note1.setSubtitle(noteSubtitle.getText().toString().trim());
+        note1.setNoteText(note.getText().toString().trim());
+        note1.setDateTime(dateTime.getText().toString().trim());
 
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
-                    //finish();
-                }
+        @SuppressLint("StaticFieldLeak")
+        class SaveNoteTask extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                NotesDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note1);
+                return null;
             }
 
-            new SaveNoteTask().execute();
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         }
+
+        new SaveNoteTask().execute();
     }
 }
