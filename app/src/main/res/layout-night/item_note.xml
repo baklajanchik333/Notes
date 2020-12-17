@@ -17,7 +17,7 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:fontFamily="@font/ubuntu_bold"
         android:includeFontPadding="false"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_13ssp" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:fontFamily="@font/ubuntu"
         android:includeFontPadding="false"
-        android:textColor="@color/black"
+        android:textColor="@color/noteSubtitleText"
         android:textSize="@dimen/_12ssp" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:fontFamily="@font/ubuntu"
         android:includeFontPadding="false"
-        android:textColor="@color/black"
+        android:textColor="@color/noteSubtitleText"
         android:textSize="@dimen/_7ssp" />
 
 </LinearLayout>
