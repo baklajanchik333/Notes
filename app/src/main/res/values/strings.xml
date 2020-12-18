@@ -16,4 +16,9 @@
     <string name="noteSubtitle">Подзаголовок примечания</string>
     <string name="note">Введите примечание здесь…</string>
     <!--</editor-fold>-->
+
+    <!--<editor-fold desc="layout_miscellaneous">-->
+    <string name="text1">Miscellaneous</string>
+    <string name="pickColor">Pick Color</string>
+    <!--</editor-fold>-->
 </resources>
