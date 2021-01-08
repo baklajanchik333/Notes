@@ -2,6 +2,7 @@ package com.example.notes.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,12 +15,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,8 +44,11 @@ import java.util.Locale;
 public class CreateNote extends AppCompatActivity {
     private ImageView back, save, imageNote;
     private EditText noteTitle, noteSubtitle, note;
-    private TextView dateTime;
+    private TextView dateTime, textWebURL;
     private View subtitleIndicator;
+    private LinearLayout layoutWebURL;
+
+    private AlertDialog dialogAddWebURL;
 
     private String selectedNoteColor;
     private String selectedImagePath;
@@ -59,7 +67,9 @@ public class CreateNote extends AppCompatActivity {
         noteSubtitle = findViewById(R.id.noteSubtitle);
         note = findViewById(R.id.note);
         dateTime = findViewById(R.id.dateTime);
+        textWebURL = findViewById(R.id.textWebURL);
         subtitleIndicator = findViewById(R.id.subtitleIndicator);
+        layoutWebURL = findViewById(R.id.layoutWebURL);
 
         back.setOnClickListener(v -> {
             onBackPressed();
@@ -93,6 +103,10 @@ public class CreateNote extends AppCompatActivity {
         note1.setDateTime(dateTime.getText().toString().trim());
         note1.setColor(selectedNoteColor);
         note1.setImagePath(selectedImagePath);
+
+        if (layoutWebURL.getVisibility() == View.VISIBLE) {
+            note1.setWebLink(textWebURL.getText().toString().trim());
+        }
 
         @SuppressLint("StaticFieldLeak")
         class SaveNoteTask extends AsyncTask<Void, Void, Void> {
@@ -199,6 +213,11 @@ public class CreateNote extends AppCompatActivity {
                 selectImage();
             }
         });
+
+        layoutMiscellaneous.findViewById(R.id.layoutAddUrl).setOnClickListener(v -> {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            showAddWebURLDialog();
+        });
     }
 
     private void setSubtitleIndicator() {
@@ -261,5 +280,39 @@ public class CreateNote extends AppCompatActivity {
         }
 
         return filePath;
+    }
+
+    private void showAddWebURLDialog() {
+        if (dialogAddWebURL == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreateNote.this);
+            View view = LayoutInflater.from(this).inflate(R.layout.add_url, (ViewGroup) findViewById(R.id.layoutAddUrlContainer));
+            builder.setView(view);
+
+            dialogAddWebURL = builder.create();
+            if (dialogAddWebURL.getWindow() != null) {
+                dialogAddWebURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            final EditText inputURL = view.findViewById(R.id.inputURL);
+            inputURL.requestFocus();
+
+            view.findViewById(R.id.textAdd).setOnClickListener(v -> {
+                if (inputURL.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(this, "Enter URL", Toast.LENGTH_SHORT).show();
+                } else if (!Patterns.WEB_URL.matcher(inputURL.getText().toString().trim()).matches()) {
+                    Toast.makeText(this, "Enter valid URL", Toast.LENGTH_SHORT).show();
+                } else {
+                    textWebURL.setText(inputURL.getText().toString().trim());
+                    layoutWebURL.setVisibility(View.VISIBLE);
+                    dialogAddWebURL.dismiss();
+                }
+            });
+
+            view.findViewById(R.id.textCancel).setOnClickListener(v -> {
+                dialogAddWebURL.dismiss();
+            });
+        }
+
+        dialogAddWebURL.show();
     }
 }
