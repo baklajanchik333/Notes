@@ -128,7 +128,7 @@ public class Main extends AppCompatActivity implements NotesListener {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 selectImage();
             } else {
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permissionDenied, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -241,9 +241,9 @@ public class Main extends AppCompatActivity implements NotesListener {
 
             view.findViewById(R.id.textAdd).setOnClickListener(v -> {
                 if (inputURL.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(this, "Enter URL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.enterURL, Toast.LENGTH_SHORT).show();
                 } else if (!Patterns.WEB_URL.matcher(inputURL.getText().toString().trim()).matches()) {
-                    Toast.makeText(this, "Enter valid URL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.enterValidURL, Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CreateNote.class);
                     intent.putExtra("isFromQuickActions", true);

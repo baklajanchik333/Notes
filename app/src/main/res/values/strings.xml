@@ -4,6 +4,9 @@
     <!--<editor-fold desc="Toasts">-->
     <string name="noEmptyTitleNote">Заголовок заметки не может быть пустым!</string>
     <string name="noEmptyNote">Заметка не может быть пустой!</string>
+    <string name="permissionDenied">В доступе отказано!</string>
+    <string name="enterURL">Введите URL</string>
+    <string name="enterValidURL">Введите действительный URL</string>
     <!--</editor-fold>-->
 
     <!--<editor-fold desc="activity_main">-->
@@ -18,7 +21,16 @@
     <!--</editor-fold>-->
 
     <!--<editor-fold desc="layout_miscellaneous">-->
-    <string name="text1">Miscellaneous</string>
+    <string name="text1">Разное</string>
     <string name="pickColor">Pick Color</string>
     <!--</editor-fold>-->
+
+    <string name="addURL">Добавить URL</string>
+    <string name="inputURL">Введите URL</string>
+    <string name="textAdd">ДОБАВИТЬ</string>
+    <string name="textCancel">ОТМЕНИТЬ</string>
+    <string name="deleteNote">Удалить заметку</string>
+    <string name="deleteNoteMessage">Вы уверены, что хотите удалить эту заметку?</string>
+    <string name="textDeleteNote">Удалить заметку</string>
+    <string name="addImage">Добавить изображение</string>
 </resources>
