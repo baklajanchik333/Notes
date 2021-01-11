@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CreateNote extends AppCompatActivity {
-    private ImageView back, save, imageNote;
+    private ImageView back, save, imageNote, removeImage, removeWebURL;
     private EditText noteTitle, noteSubtitle, note;
     private TextView dateTime, textWebURL;
     private View subtitleIndicator;
@@ -72,6 +72,8 @@ public class CreateNote extends AppCompatActivity {
         textWebURL = findViewById(R.id.textWebURL);
         subtitleIndicator = findViewById(R.id.subtitleIndicator);
         layoutWebURL = findViewById(R.id.layoutWebURL);
+        removeImage = findViewById(R.id.removeImage);
+        removeWebURL = findViewById(R.id.removeWebURL);
 
         back.setOnClickListener(v -> {
             onBackPressed();
@@ -79,6 +81,18 @@ public class CreateNote extends AppCompatActivity {
 
         save.setOnClickListener(v -> {
             saveNote();
+        });
+
+        removeWebURL.setOnClickListener(v -> {
+            textWebURL.setText(null);
+            layoutWebURL.setVisibility(View.GONE);
+        });
+
+        removeImage.setOnClickListener(v -> {
+            imageNote.setImageBitmap(null);
+            imageNote.setVisibility(View.GONE);
+            removeImage.setVisibility(View.GONE);
+            selectedImagePath = "";
         });
 
         dateTime.setText(new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", Locale.getDefault())
@@ -91,6 +105,7 @@ public class CreateNote extends AppCompatActivity {
             alreadyAvailableNote = (Note) getIntent().getSerializableExtra("note");
             setViewOrUpdateNote();
         }
+
 
         initMiscellaneous();
         setSubtitleIndicator();
@@ -105,6 +120,7 @@ public class CreateNote extends AppCompatActivity {
         if (alreadyAvailableNote.getImagePath() != null && !alreadyAvailableNote.getImagePath().trim().isEmpty()) {
             imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyAvailableNote.getImagePath()));
             imageNote.setVisibility(View.VISIBLE);
+            removeImage.setVisibility(View.VISIBLE);
             selectedImagePath = alreadyAvailableNote.getImagePath();
         }
 
@@ -303,6 +319,7 @@ public class CreateNote extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
                         imageNote.setVisibility(View.VISIBLE);
+                        removeImage.setVisibility(View.VISIBLE);
 
                         selectedImagePath = getPathFromUrl(selectedImageUri);
                     } catch (Exception e) {
