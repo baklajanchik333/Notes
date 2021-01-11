@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -24,6 +27,7 @@ import java.util.List;
 public class Main extends AppCompatActivity implements NotesListener {
     private RecyclerView recyclerView;
     private ImageView addNoteMain;
+    private EditText inputSearch;
 
     public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
@@ -41,6 +45,26 @@ public class Main extends AppCompatActivity implements NotesListener {
 
         addNoteMain = findViewById(R.id.addNoteMain);
         recyclerView = findViewById(R.id.recyclerView);
+        inputSearch = findViewById(R.id.inputSearch);
+
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                noteAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (noteList.size() != 0) {
+                    noteAdapter.searchNote(s.toString());
+                }
+            }
+        });
 
         addNoteMain.setOnClickListener(v -> startActivityForResult(new Intent(getApplicationContext(), CreateNote.class), REQUEST_CODE_ADD_NOTE));
 
