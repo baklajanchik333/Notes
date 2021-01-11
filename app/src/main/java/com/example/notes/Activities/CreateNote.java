@@ -111,7 +111,7 @@ public class CreateNote extends AppCompatActivity {
         setSubtitleIndicator();
     }
 
-    private void setViewOrUpdateNote() {
+    private void setViewOrUpdateNote( ) {
         noteTitle.setText(alreadyAvailableNote.getTitle());
         noteSubtitle.setText(alreadyAvailableNote.getSubtitle());
         note.setText(alreadyAvailableNote.getNoteText());
