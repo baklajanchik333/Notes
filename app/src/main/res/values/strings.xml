@@ -22,7 +22,7 @@
 
     <!--<editor-fold desc="layout_miscellaneous">-->
     <string name="text1">Разное</string>
-    <string name="pickColor">Pick Color</string>
+    <string name="pickColor">Выберите цвет</string>
     <!--</editor-fold>-->
 
     <string name="addURL">Добавить URL</string>
